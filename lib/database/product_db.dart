@@ -19,7 +19,7 @@ class ProductDb {
               id integer primary key autoincrement,
               barcode text,
               pd_code text not null,
-              pd_stock text not  null,
+              pd_stock text not null,
               name text not null,
               price real not null,
               category text,

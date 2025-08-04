@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mlkit_store/database/cart_db.dart';
 import 'package:mlkit_store/database/product_db.dart';
 import 'package:mlkit_store/providers/order_provider.dart';
 import 'package:mlkit_store/widgets/my_dialog.dart';
@@ -28,7 +29,7 @@ class Scanner extends HookConsumerWidget {
           int timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
           final query = await ProductDb.query(
-            "SELECT name,barcode,price FROM products where barcode = '$value' limit 1",
+            "SELECT name,barcode,price,image_path FROM products where barcode = '$value' limit 1",
           );
 
           if (query.isNotEmpty) {
@@ -42,6 +43,13 @@ class Scanner extends HookConsumerWidget {
               icon: Icons.check_circle,
               iconColor: Colors.green,
             );
+
+            await CartDb.insert({
+              'pd_code': value,
+              'name': query.first['name'].toString(),
+              'price': query.first['price'],
+              'count': "1",
+            });
 
             // await OrderDb.insertOrder({
             //   'pd_code': value,

@@ -13,7 +13,7 @@ class ListOrderPage extends HookConsumerWidget {
       final query = await OrderDb.query("SELECT * FROM orders");
       ordersList.value = query;
 
-      print('order = ${ordersList.value}');
+      // print('order = ${ordersList.value}');
     }
 
     useEffect(() {

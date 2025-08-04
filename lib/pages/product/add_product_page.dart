@@ -29,6 +29,7 @@ class AddProductPage extends HookConsumerWidget {
     final detailController = useTextEditingController();
     final selectedCategory = useState<String?>(null);
     final barcodeController = useTextEditingController();
+    final stockController = useTextEditingController();
 
     final fileImage = ref.watch(imageProvider);
 
@@ -47,12 +48,12 @@ class AddProductPage extends HookConsumerWidget {
             message: 'import product',
             child: GestureDetector(
               onTap: () {},
-            
+
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.network(
                   'https://cdn-icons-png.flaticon.com/128/8765/8765164.png',
-                   width: 30,
+                  width: 30,
                 ),
               ),
             ),
@@ -96,6 +97,14 @@ class AddProductPage extends HookConsumerWidget {
                   label: 'Price',
                   icon: Icons.attach_money,
                   keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 16),
+
+                _buildTextField(
+                  controller: stockController,
+                  keyboardType: TextInputType.number,
+                  label: 'Stock',
+                  icon: Icons.list_alt_outlined,
                 ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
@@ -198,6 +207,7 @@ class AddProductPage extends HookConsumerWidget {
                           'pd_code': newCode,
                           'name': nameController.text,
                           'price': priceController.text,
+                          'pd_stock': stockController.text,
                           'category': selectedCategory.value,
                           'description': detailController.text,
                           'image_path': base64Image,
